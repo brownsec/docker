@@ -160,4 +160,4 @@ ENTRYPOINT ["/bin/bash"]
 WORKDIR /root
 
 # docker build -t bounty/bounty .
-# docker run -it -v /tmp/test:/tmp/test bounty/bounty
+# docker run --rm -it -v $(pwd):/data/ bounty/bounty
