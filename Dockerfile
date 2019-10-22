@@ -137,6 +137,7 @@ RUN git clone https://github.com/ChrisTruncer/EyeWitness /usr/share/tools/HTTPAn
 RUN git clone https://github.com/robertdavidgraham/masscan /usr/share/tools/HTTPAnal/masscan
 
 RUN apt-get install golang -y
+RUN export GOPATH=$HOME/go
 RUN go get -u github.com/tomnomnom/gf
 RUN echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc \
 	&& mkdir /root/.gf
