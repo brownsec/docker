@@ -1,4 +1,4 @@
-# Set up the basics 
+# Set up the basics
 # Leverage Kali Base Image
 FROM kalilinux/kali-linux-docker:latest
 
@@ -8,7 +8,7 @@ RUN apt-get update && apt-get upgrade -y
 # Install the Core
 RUN apt-get update && apt-get install -y \
   sudo git wget curl git zip ccze byobu zsh golang \
-  ufw python-pip nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb amass w3af
+  ufw python-pip nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb amass
 
 # Make Directory Structure
 RUN mkdir /usr/share/wordlists && mkdir -p /usr/share/tools/scripts/
@@ -47,7 +47,6 @@ RUN apt-get update && apt-get install -y \
   libdbus-1-dev \
   libgtk2.0-dev \
   libnotify-dev \
-  libgnome-keyring-dev \
   libgconf2-dev \
   libasound2-dev \
   libcap-dev \
@@ -99,7 +98,7 @@ RUN git clone https://github.com/dxa4481/truffleHog /usr/share/tools/gitint/truf
 RUN git clone https://github.com/michenriksen/gitrob /usr/share/tools/gitint/gitrob
 
 
-# OSINT Tooling 
+# OSINT Tooling
 RUN mkdir -p /usr/share/tools/OSINT
 RUN apt-get update && apt-get install -y recon-ng || true
 RUN git clone https://github.com/smicallef/spiderfoot /usr/share/tools/OSINT/spiderfoot
@@ -111,18 +110,18 @@ RUN mkdir /usr/share/tools/HTTPAnal
 RUN git clone https://github.com/ChrisTruncer/EyeWitness /usr/share/tools/HTTPAnal/eyewitness
 RUN git clone https://github.com/robertdavidgraham/masscan /usr/share/tools/HTTPAnal/masscan
 
+RUN apt-get install golang -y
 RUN go get -u github.com/tomnomnom/gf
 RUN echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc \
 	&& mkdir /root/.gf
-COPY gf-examples/*.json /root/.gf/
+#COPY gf-examples/*.json /root/.gf/
 
-WORKDIR /root
 RUN go get -u github.com/tomnomnom/gron && \
     go get -u github.com/tomnomnom/httprobe && \
     go get -u github.com/tomnomnom/meg && \
     go get -u github.com/tomnomnom/unfurl && \
     go get github.com/tomnomnom/waybackurls && \
-    go get -u github.com/tomnomnom/qsreplace.git && \
+    go get -u github.com/tomnomnom/qsreplace && \
     go get github.com/ffuf/ffuf && \
     go get -u github.com/tomnomnom/assetfinder
 
