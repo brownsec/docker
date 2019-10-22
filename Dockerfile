@@ -34,7 +34,7 @@ RUN set -x \
 # Install the Core
 RUN apt-get update && apt-get install -y \
   sudo git wget curl git zip ccze byobu zsh golang \
-  ufw python-pip nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb amass
+  ufw python-pip python3-pip nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb amass
 
 # Make Directory Structure
 RUN mkdir /usr/share/wordlists && mkdir -p /usr/share/tools/scripts/
