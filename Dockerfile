@@ -8,7 +8,7 @@ RUN apt-get update && apt-get upgrade -y
 # Install the Core
 RUN apt-get update && apt-get install -y \
   sudo git wget curl git zip ccze byobu zsh golang \
-  ufw python-pip  nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb
+  ufw python-pip nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb amass w3af
 
 # Make Directory Structure
 RUN mkdir /usr/share/wordlists && mkdir -p /usr/share/tools/scripts/
@@ -80,6 +80,12 @@ RUN git clone https://github.com/droope/droopescan /usr/share/tools/CMS/droopsca
 RUN apt-get update && apt-get install -y wpscan || true
 RUN git clone https://github.com/Dionach/CMSmap /usr/share/tools/CMS/cmsmap
 
+# Detect WAF
+RUN git clone https://github.com/EnableSecurity/wafw00f /opt/wafw00f && \
+    git clone https://github.com/techgaun/github-dorks /opt/github-dorks && \
+    git clone https://github.com/maurosoria/dirsearch /opt/dirsearch && \
+    git clone https://github.com/s0md3v/Arjun.git /opt/arjun
+
 # Directory Busting
 RUN mkdir -p /usr/share/tools/DirBusting
 RUN apt-get update && apt-get install -y dirb || true
@@ -105,15 +111,25 @@ RUN mkdir /usr/share/tools/HTTPAnal
 RUN git clone https://github.com/ChrisTruncer/EyeWitness /usr/share/tools/HTTPAnal/eyewitness
 RUN git clone https://github.com/robertdavidgraham/masscan /usr/share/tools/HTTPAnal/masscan
 
-# Optional
-# BBF Tooling (There will be some dupes SORRY!
-RUN mkdir -p /usr/share/tools/BBF && \
-    cd /usr/share/tools/BBF && \
-    for y in $(wget https://bugbountyforum.com/tools/ &&  grep "/tools/" index.html | cut -d "=" -f 2 | cut -d "/" -f 2,3 | grep -v ">"); do wget https://bugbountyforum.com/$y; done && for x in $(ls); do grep "href=" $x | cut -d "=" -f 2 | grep github.com | cut -d "/" -f 3,4,5 | cut -d " " -f 1 |sed -e 's/^"//' -e 's/"$//' | grep -v "gist" >> Repos.txt; done && for a in $(cat Repos.txt);do git clone https://$a; done && find . -maxdepth 1 -type f -delete
+RUN go get -u github.com/tomnomnom/gf
+RUN echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc \
+	&& mkdir /root/.gf
+COPY gf-examples/*.json /root/.gf/
+
+WORKDIR /root
+RUN go get -u github.com/tomnomnom/gron && \
+    go get -u github.com/tomnomnom/httprobe && \
+    go get -u github.com/tomnomnom/meg && \
+    go get -u github.com/tomnomnom/unfurl && \
+    go get github.com/tomnomnom/waybackurls && \
+    go get -u github.com/tomnomnom/qsreplace.git && \
+    go get github.com/ffuf/ffuf && \
+    go get -u github.com/tomnomnom/assetfinder
+
 RUN echo "That's all folks! You're good to go hack the planet!"
 
 # set to bash so you can set keys before running aquatone.
 ENTRYPOINT ["/bin/bash"]
 
 #  Set working directory
-WORKDIR /root/
+WORKDIR /root
