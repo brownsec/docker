@@ -151,7 +151,7 @@ RUN go get -u github.com/tomnomnom/gron && \
     go get github.com/ffuf/ffuf && \
     go get -u github.com/tomnomnom/assetfinder
 
-RUN echo "That's all folks! You're good to go hack the planet!"
+RUN echo "All Set!! Go hack the planet!"
 
 # set to bash so you can set keys before running aquatone.
 ENTRYPOINT ["/bin/bash"]
