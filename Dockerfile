@@ -22,9 +22,9 @@ RUN go get -u github.com/tomnomnom/gron && \
     go get -u github.com/tomnomnom/assetfinder
 
 # Git Recon
-RUN mkdir /usr/share/tools/gitint
-RUN git clone https://github.com/libcrack/gitrecon /root/tools/gitint/gitrecon
-RUN git clone https://github.com/dxa4481/truffleHog /root/tools/gitint/trufflehog
+RUN mkdir /root/tools
+RUN git clone https://github.com/libcrack/gitrecon /root/tools/gitrecon
+RUN git clone https://github.com/dxa4481/truffleHog /root/tools/trufflehog
 RUN go get github.com/michenriksen/gitrob /root/tools/gitrob
 
 # Creating Alias for tools
