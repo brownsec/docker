@@ -19,7 +19,7 @@ RUN go get -u github.com/tomnomnom/gron && \
     go get github.com/tomnomnom/waybackurls && \
     go get -u github.com/tomnomnom/qsreplace && \
     go get github.com/ffuf/ffuf && \
-    go get -u github.com/tomnomnom/assetfinder \
+    go get -u github.com/tomnomnom/assetfinder && \
     go get github.com/ffuf/ffuf
 
 # Git Recon
@@ -40,15 +40,22 @@ RUN echo 'alias ffuf="/root/go/bin/ffuf"' >> ~/.bashrc
 RUN echo 'alias assetfinder="/root/go/bin/assetfinder"' >> ~/.bashrc
 
 
+#FinalRecon
+RUN git clone https://github.com/thewhiteh4t/FinalRecon.git /root/tools/FinalRecon
+RUN pip3 install -r /root/tools/FinalRecon/requirements.txt
+RUN echo 'alias finalrecon="python3 /root/tools/FinalRecon/finalrecon.py --full $1"' >> ~/.bashrc
+
+# Arjun
+RUN git clone https://github.com/s0md3v/Arjun.git /root/tools/Arjun
+RUN echo 'alias arjun="python3 /root/tools/Arjun/arjun.py $1"' >> ~/.bashrc
+
+
 # Pull Wordlists
 #RUN git clone https://github.com/danielmiessler/SecLists /usr/share/wordlists/seclists
 #RUN git clone https://github.com/danielmiessler/RobotsDisallowed /usr/share/wordlists/robotsdisallowed
 #RUN cd /usr/share/wordlists/seclists/Passwords/Leaked-Databases && tar xvzf rockyou.txt.tar.gz
 
 RUN echo "All Set!! Go hack the planet!"
-
-# set to bash so you can set keys before running aquatone.
-ENTRYPOINT ["/bin/bash"]
 
 #  Set working directory
 WORKDIR /root
