@@ -19,16 +19,18 @@ RUN go get -u github.com/tomnomnom/gron && \
     go get github.com/tomnomnom/waybackurls && \
     go get -u github.com/tomnomnom/qsreplace && \
     go get github.com/ffuf/ffuf && \
-    go get -u github.com/tomnomnom/assetfinder
+    go get -u github.com/tomnomnom/assetfinder \
+    go get github.com/ffuf/ffuf
 
 # Git Recon
 RUN mkdir /root/tools
 RUN git clone https://github.com/libcrack/gitrecon /root/tools/gitrecon
 RUN git clone https://github.com/dxa4481/truffleHog /root/tools/trufflehog
-RUN go get github.com/michenriksen/gitrob /root/tools/gitrob
+RUN go get github.com/michenriksen/gitrob
 
 # Creating Alias for tools
-RUN echo 'alias gron="/root/go/bin/gitrob"' >> ~/.bashrc
+RUN echo 'alias ffuf="/root/go/bin/ffuf"' >> ~/.bashrc
+RUN echo 'alias gitrob="/root/go/bin/gitrob"' >> ~/.bashrc
 RUN echo 'alias gron="/root/go/bin/gron"' >> ~/.bashrc
 RUN echo 'alias httprobe="/root/go/bin/httprobe"' >> ~/.bashrc
 RUN echo 'alias unfurl="/root/go/bin/unfurl"' >> ~/.bashrc
