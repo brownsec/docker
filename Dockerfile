@@ -49,6 +49,10 @@ RUN echo 'alias finalrecon="python3 /root/tools/FinalRecon/finalrecon.py --full 
 RUN git clone https://github.com/s0md3v/Arjun.git /root/tools/Arjun
 RUN echo 'alias arjun="python3 /root/tools/Arjun/arjun.py $1"' >> ~/.bashrc
 
+#knock
+RUN git clone https://github.com/guelfoweb/knock.git /root/tools/knock
+WORKDIR /root/tools/knock
+RUN python setup.py install
 
 # Pull Wordlists
 #RUN git clone https://github.com/danielmiessler/SecLists /usr/share/wordlists/seclists
