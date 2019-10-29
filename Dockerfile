@@ -8,9 +8,10 @@ RUN apt-get -yqq update && \
     apt-get clean && \
     apt-get install -y software-properties-common kali-linux-top10 --fix-missing
 
+RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get install -y git wget curl git zip ccze byobu zsh golang \
   ufw python-pip python3-pip nikto dotdotpwn jsql nmap sqlmap sqlninja \
-  sublist3r thc-ipv6 hydra dirb amass wafw00f python-dnspython
+  sublist3r thc-ipv6 hydra dirb amass wafw00f python-dnspython php7.0 libapache2-mod-php
 
 RUN go get -u github.com/tomnomnom/gron && \
     go get -u github.com/tomnomnom/httprobe && \
@@ -53,6 +54,18 @@ RUN echo 'alias arjun="python3 /root/tools/Arjun/arjun.py $1"' >> ~/.bashrc
 RUN git clone https://github.com/guelfoweb/knock.git /root/tools/knock
 WORKDIR /root/tools/knock
 RUN python setup.py install
+
+
+# knock
+RUN git clone -f https://github.com/guelfoweb/knock.git /root/tools/knock
+WORKDIR /root/tools/knock
+RUN python setup.py install
+
+#template-generator
+RUN git clone https://github.com/fransr/template-generator.git /root/tools/template-generator
+WORKDIR /root/tools/template-generator
+EXPOSE 9999
+CMD ["php", "-S", "0.0.0.0:9999", "-t", "/root/tools/template-generator"]
 
 # Pull Wordlists
 #RUN git clone https://github.com/danielmiessler/SecLists /usr/share/wordlists/seclists
