@@ -2,4 +2,4 @@
 
 This also comes with template generator (https://github.com/fransr/template-generator)
 
-http://localhost:9999/
+Visit http://localhost:9999/
