@@ -56,16 +56,28 @@ WORKDIR /root/tools/knock
 RUN python setup.py install
 
 
-# knock
-RUN git clone -f https://github.com/guelfoweb/knock.git /root/tools/knock
-WORKDIR /root/tools/knock
-RUN python setup.py install
+#knock
+#RUN git clone -f https://github.com/guelfoweb/knock.git /root/tools/knock
+#WORKDIR /root/tools/knock
+#RUN python setup.py install
 
 #template-generator
 RUN git clone https://github.com/fransr/template-generator.git /root/tools/template-generator
 WORKDIR /root/tools/template-generator
 EXPOSE 9999
-CMD ["php", "-S", "0.0.0.0:9999", "-t", "/root/tools/template-generator"]
+RUN echo "php -S 0.0.0.0:9999" > instructions.txt
+#CMD ["nohup", "php", "-S", "0.0.0.0:9999", "-t", "/root/tools/template-generator", "&"]
+
+
+RUN git clone https://github.com/GerbenJavado/LinkFinder.git /root/tools/linkfinder
+WORKDIR /root/tools/linkfinder
+RUN pip3 install -r requirements.txt
+RUN python3 setup.py install
+RUN echo 'alias linkfinder="python3 /root/tools/linkfinder/linkfinder.py"' >> ~/.bashrc
+
+RUN git clone https://github.com/internetwache/GitTools.git /root/tools/gittools
+RUN pip3 install -r /root/tools/gittools/Finder/requirements.txt
+RUN echo 'alias gitfinder="python3 /root/tools/gittools/Finder/gitfinder.py"' >> ~/.bashrc
 
 # Pull Wordlists
 #RUN git clone https://github.com/danielmiessler/SecLists /usr/share/wordlists/seclists
